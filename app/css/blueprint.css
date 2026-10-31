@@ -470,6 +470,10 @@ row > label > name {
   left: 0;
 }
 
+functions row > label > name {
+  top: 6px;
+}
+
 row > label::after {
   content: none;
 }
@@ -486,7 +490,8 @@ row > badge {
 }
 
 row > button {
-  top: calc(var(--unit) * 3 - 6px);
+  top: var(--unit);
+  bottom: var(--unit);
   right: calc(var(--pad) + var(--unit) * 2 - 6px);
 }
 
