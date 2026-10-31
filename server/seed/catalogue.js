@@ -327,6 +327,7 @@ export default await Promise.all(
     // webdev/card, Erat Herba and Steel Sword as ws-card-game's CARDS.ts has them.
     {
       file: 'CardHand.html',
+      namespace: 'webdev',
       notes: 'Its cards are whatever sits between the component tags, any HTML or another <component src> such as webdev/card.',
       slug: 'card-hand',
       title: 'Card Hand',
