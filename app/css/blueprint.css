@@ -475,12 +475,12 @@ row > label::after {
 }
 
 row > badge {
-  top: calc(var(--unit) * 2 - 4px);
+  top: calc(var(--unit) * 3 - 4px);
   right: calc(var(--unit) * 2 - 4px);
 }
 
 row > button {
-  top: calc(var(--unit) * 2 - 6px);
+  top: calc(var(--unit) * 3 - 6px);
   right: calc(var(--unit) * 2 - 6px);
 }
 
