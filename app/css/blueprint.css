@@ -468,9 +468,14 @@ row > label::after {
   content: none;
 }
 
-row > :is(badge, button) {
+row > badge {
   top: calc(var(--unit) * 2 - 4px);
   right: calc(var(--unit) * 2 - 4px);
+}
+
+row > button {
+  top: calc(var(--unit) * 2 - 5px);
+  right: calc(var(--unit) * 2 - 6px);
 }
 
 box[main] + divider,
