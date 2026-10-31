@@ -446,9 +446,28 @@ props {
   border-top: var(--hairline) solid var(--border);
 }
 
-field {
-  display: flex;
-  width: 50%;
+props label[prop] {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  justify-items: start;
+  gap: var(--pad);
+  width: 100%;
+}
+
+props label[prop] > :not(code, badge) {
+  grid-column: 2;
+}
+
+props label[prop]::after {
+  content: none;
+}
+
+props label[prop] > badge {
+  top: 50%;
+  right: calc(var(--unit) * 2);
+  translate: 0 -50%;
 }
 
 box[main] + divider,
