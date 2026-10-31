@@ -141,64 +141,54 @@
               <card p-4 overflow-auto><code>@[$.include()]</code></card>
               <!-- /if -->
 
-              <props inert="@[coding]">
+              <props class="sticky reverse" bg-card pt-4 inert="@[coding]">
                 <h6>Props</h6>
                 <!-- if props.length -->
-                <table>
-                  <tbody>
-                    <!-- if slot -->
-                    <tr>
-                      <td py-4>
-                        <crow justify-between g-4 w-full>
-                          <field>
-                            <codie markup highlight-html w-full></codie>
-                          </field>
-                          <crow right g-2>
-                            <code>@[slot.name]</code>
-                            <badge bg-hollow>@[slot.type]</badge>
-                          </crow>
-                        </crow>
-                      </td>
-                    </tr>
-                    <!-- /if -->
-                    <!-- each attributes as prop (prop.name) -->
-                    <tr>
-                      <td py-4>
-                        <crow justify-between g-4 w-full>
-                          <field>
-                            <!-- if prop.type === 'select' -->
-                            <label w-full>
-                              <select w-full onchange="$.values['@[prop.name]'] = this.value">
-                                <!-- each prop.options as choice -->
-                                <option value="@[choice]" selected="@[values[prop.name] === choice]">@[choice]</option>
-                                <!-- /each -->
-                              </select>
-                            </label>
-                            <!-- else if prop.type === 'boolean' -->
-                            <input type="checkbox" role="switch" checked="@[values[prop.name]]"
-                              onchange="$.values['@[prop.name]'] = event.currentTarget.checked" />
-                            <!-- else if prop.type === 'number' -->
-                            <input type="number" w-full placeholder='Defaults to "@[prop.default]"' value="@[values[prop.name]]"
-                              oninput="$.values['@[prop.name]'] = Number(this.value)" />
-                            <!-- else if prop.type === 'json' -->
-                            <codie json="@[prop.name]" highlight-json w-full></codie>
-                            <!-- else -->
-                            <input type="text" w-full placeholder='Defaults to "@[prop.default]"' value="@[values[prop.name]]" oninput="$.values['@[prop.name]'] = this.value" />
-                            <!-- /if -->
-                          </field>
-                          <crow right g-2>
-                            <code>@[prop.name]</code>
-                            <badge bg-hollow>@[prop.type]</badge>
-                          </crow>
-                        </crow>
-                        <!-- if invalid[prop.name] -->
-                        <p text-red>Not valid JSON yet — the preview is still on the last value that parsed.</p>
-                        <!-- /if -->
-                      </td>
-                    </tr>
-                    <!-- /each -->
-                  </tbody>
-                </table>
+                <!-- if slot -->
+                <crow justify-between g-4 w-full>
+                  <field>
+                    <codie markup highlight-html w-full></codie>
+                  </field>
+                  <crow right g-2>
+                    <code>@[slot.name]</code>
+                    <badge bg-hollow>@[slot.type]</badge>
+                  </crow>
+                </crow>
+                <!-- /if -->
+                <!-- each attributes as prop (prop.name) -->
+                <crow vertical left g-2 w-full>
+                  <crow justify-between g-4 w-full>
+                    <field>
+                      <!-- if prop.type === 'select' -->
+                      <label w-full>
+                        <select w-full onchange="$.values['@[prop.name]'] = this.value">
+                          <!-- each prop.options as choice -->
+                          <option value="@[choice]" selected="@[values[prop.name] === choice]">@[choice]</option>
+                          <!-- /each -->
+                        </select>
+                      </label>
+                      <!-- else if prop.type === 'boolean' -->
+                      <input type="checkbox" role="switch" checked="@[values[prop.name]]"
+                        onchange="$.values['@[prop.name]'] = event.currentTarget.checked" />
+                      <!-- else if prop.type === 'number' -->
+                      <input type="number" w-full placeholder='Defaults to "@[prop.default]"' value="@[values[prop.name]]"
+                        oninput="$.values['@[prop.name]'] = Number(this.value)" />
+                      <!-- else if prop.type === 'json' -->
+                      <codie json="@[prop.name]" highlight-json w-full></codie>
+                      <!-- else -->
+                      <input type="text" w-full placeholder='Defaults to "@[prop.default]"' value="@[values[prop.name]]" oninput="$.values['@[prop.name]'] = this.value" />
+                      <!-- /if -->
+                    </field>
+                    <crow right g-2>
+                      <code>@[prop.name]</code>
+                      <badge bg-hollow>@[prop.type]</badge>
+                    </crow>
+                  </crow>
+                  <!-- if invalid[prop.name] -->
+                  <p text-red>Not valid JSON yet — the preview is still on the last value that parsed.</p>
+                  <!-- /if -->
+                </crow>
+                <!-- /each -->
 
                 <button tertiary w-full onclick="$.reset()"><icon reset></icon>Reset to defaults</button>
                 <!-- else -->
