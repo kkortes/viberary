@@ -136,42 +136,6 @@ export default await Promise.all(
         },
       ],
     },
-    {
-      file: 'Dialog.html',
-      notes: 'Ported to Vibe.',
-      slug: 'dialog',
-      title: 'Dialog',
-      description: 'Renders any component full-screen over a blurred backdrop, hands it a close, and closes on Escape.',
-      category: 'Layout',
-      icon: 'layout',
-      styling: 'stylecheat',
-      props: [
-        {
-          name: 'open',
-          type: 'boolean',
-          default: true,
-          description: 'Shows the dialog while set. Bind it to state of your own: Escape or the close handed to the shown component sets it back to false.',
-        },
-        {
-          name: 'component',
-          type: 'text',
-          default: 'data:text/html,<card p-6><p>Escape or the button closes me.</p><button onclick="this.close()">Close</button></card>',
-          description: 'Address of the component to show while open. The default is an inline one, so a page elsewhere passes its own.',
-        },
-        {
-          name: 'props',
-          type: 'json',
-          default: {},
-          description: 'Handed to the shown component as its props prop. Next to it, that component gets close, called as $.close().',
-        },
-        {
-          name: 'noescape',
-          type: 'boolean',
-          default: false,
-          description: 'Escape leaves the dialog open while set. The close handed to the shown component still closes it.',
-        },
-      ],
-    },
     // The game card from ws-card-game (src/components/Card.svelte), rewritten
     // from Tailwind into plain CSS. Its fonts load from Google Fonts and its
     // icons and paper grain are inlined; the art is the one thing it fetches by prop.
