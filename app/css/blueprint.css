@@ -454,7 +454,7 @@ props > button {
 row > label {
   display: grid;
   grid-template-columns: 140px minmax(0, 1fr);
-  align-items: start;
+  align-items: center;
   justify-items: start;
   gap: var(--pad);
   width: 100%;
