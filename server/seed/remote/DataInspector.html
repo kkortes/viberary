@@ -106,24 +106,84 @@
   });
 </script>
 
-<data-inspector sm vertical left f-1 w-full overflow-hidden bg="#1e1e1e" text="#d4d4d4">
-  <crow justify-between w-full g="6" py="3.75" px="4.5" bg="#252526">
-    <h6 sm text="#969696">
-      Data (@[this.view(data, this.openPaths).shallow] | @[this.view(data, this.openPaths).total])
-    </h6>
+<data-inspector sm vertical left f-1 w-full overflow-hidden>
+  <crow justify-between w-full g="6" py="3.75" px="4.5">
+    <h6 sm>Data (@[this.view(data, this.openPaths).shallow] | @[this.view(data, this.openPaths).total])</h6>
     <crow g="1.5">
-      <button secondary sm radius="4px" bg="transparent" text="#969696" hover="#2a2d2e" onclick="this.toggleAll()">
-        @[this.view(data, this.openPaths).label]
-      </button>
-      <button secondary sm radius="4px" bg="transparent" text="#969696" hover="#2a2d2e" onclick="this.copy()">Copy JSON</button>
+      <button secondary sm radius="4px" onclick="this.toggleAll()">@[this.view(data, this.openPaths).label]</button>
+      <button secondary sm radius="4px" onclick="this.copy()">Copy JSON</button>
     </crow>
   </crow>
   <data-inspector-lines vertical left up f-1 w-full overflow-auto>
     <!-- each this.view(data, this.openPaths).rows as row (row.path) -->
-    <crow left w-full g="3" py="0.75" px="4.5" hover="#2a2d2e" onclick="this.toggle(event, row)">
-      <span f-0 pl="@[row.depth]ch" text="#9cdcfe">@[row.key]</span>
-      <crow right f-1 overflow-hidden text="@[row.expandable ? '#569cd6' : '#ce9178']">@[row.summary]</crow>
-    </crow>
+    <data-inspector-row flex w-full g="3" py="0.75" px="4.5" expandable="@[row.expandable]" onclick="this.toggle(event, row)">
+      <data-inspector-key f-0 pl="@[row.depth]ch">@[row.key]</data-inspector-key>
+      <data-inspector-value flex right f-1 overflow-hidden bracket="@[row.expandable]">@[row.summary]</data-inspector-value>
+    </data-inspector-row>
     <!-- /each -->
   </data-inspector-lines>
 </data-inspector>
+
+<style>
+  data-inspector {
+    --inspector-bg: #1e1e1e;
+    --inspector-header-bg: #252526;
+    --inspector-border: #3c3c3c;
+    --inspector-divider: #424242;
+    --inspector-divider-strong: #505050;
+    --inspector-text: #d4d4d4;
+    --inspector-text-muted: #969696;
+    --inspector-row-hover: #2a2d2e;
+    --inspector-key: #9cdcfe;
+    --inspector-bracket: #569cd6;
+    --inspector-string: #ce9178;
+
+    background: var(--inspector-bg);
+    color: var(--inspector-text);
+  }
+
+  data-inspector > crow {
+    background: var(--inspector-header-bg);
+    border-bottom: 1px solid var(--inspector-border);
+  }
+
+  data-inspector h6 {
+    color: var(--inspector-text-muted);
+  }
+
+  data-inspector button {
+    color: var(--inspector-text-muted);
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--inspector-border);
+  }
+
+  data-inspector button:hover {
+    color: var(--inspector-text);
+    background: var(--inspector-row-hover);
+    box-shadow: inset 0 0 0 1px var(--inspector-divider-strong);
+  }
+
+  data-inspector-lines {
+    scrollbar-color: var(--inspector-divider) transparent;
+  }
+
+  data-inspector-row:hover {
+    background: var(--inspector-row-hover);
+  }
+
+  data-inspector-row[expandable] {
+    cursor: pointer;
+  }
+
+  data-inspector-key {
+    color: var(--inspector-key);
+  }
+
+  data-inspector-value {
+    color: var(--inspector-string);
+  }
+
+  data-inspector-value[bracket] {
+    color: var(--inspector-bracket);
+  }
+</style>
