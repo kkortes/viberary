@@ -105,6 +105,32 @@ export default await Promise.all(
       ],
     },
     {
+      file: 'Pagination.html',
+      notes: 'Ported from the webdev-game-stack battleborn-brawlers release notes and teamplay list.',
+      slug: 'pagination',
+      title: 'Pagination',
+      description: 'Previous and Next buttons around a Page x of y label, each button disabled at its end. Needs Stylecheat.',
+      category: 'Navigation',
+      icon: 'chevron-right',
+      styling: 'stylecheat',
+      props: [
+        { name: 'page', type: 'number', default: 0, description: 'The page in view, counted from 0; the label shows it from 1.' },
+        { name: 'pageCount', type: 'number', default: 5, description: 'How many pages there are.' },
+        {
+          name: 'prev',
+          type: 'text',
+          default: '',
+          description: 'What a click on Previous runs, such as releaseNotesPrev(). It moves page itself: the component only calls it.',
+        },
+        {
+          name: 'next',
+          type: 'text',
+          default: '',
+          description: 'What a click on Next runs, such as releaseNotesNext(). It moves page itself: the component only calls it.',
+        },
+      ],
+    },
+    {
       file: 'Keystrokes.html',
       notes: 'Ported to Vibe.',
       slug: 'keystrokes',
