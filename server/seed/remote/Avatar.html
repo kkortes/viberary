@@ -1,4 +1,4 @@
-<avatar-disc sm="@[sm]" style="--x: @[x]; --y: @[y]; --zoom: @[zoom || 5]">
+<avatar-disc style="--x: @[x]; --y: @[y]; --zoom: @[zoom || 5]">
   <img src="@[image]" alt="@[name || '']" />
 </avatar-disc>
 
@@ -30,9 +30,5 @@
     width: calc(100% * var(--zoom));
     transform: translate(calc(var(--x, 50) * -1%), calc(var(--y, 15) * -1%));
     pointer-events: none;
-  }
-
-  avatar-disc[sm] {
-    width: calc(var(--unit) * 12);
   }
 </style>

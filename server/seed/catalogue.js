@@ -296,7 +296,6 @@ export default await Promise.all(
         { name: 'y', type: 'number', default: 21, description: 'Vertical point of the image, in percent of its height, centred in the circle.' },
         { name: 'zoom', type: 'number', default: 5, description: 'Image width as a multiple of the circle width. 0 falls back to 5.' },
         { name: 'name', type: 'text', default: 'Oskar', description: 'Alt text of the image.' },
-        { name: 'sm', type: 'boolean', default: false, description: 'Shrinks it to the 48px small size.' },
       ],
     },
     // Its cards are whatever sits between its tags; the default holds two
