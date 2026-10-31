@@ -89,6 +89,26 @@ const showMarkup = () => {
   markup.code !== children() && (markup.code = children());
 };
 
+// A json prop is edited in a codie of its own, row by row, and committed
+// through setJson the way it is typed. A reset or another version hands each
+// editor its draft.
+const jsons = new WeakMap();
+
+const showJson = () =>
+  document.querySelectorAll('codie[json]').forEach((el) => {
+    const draft = window.$.drafts[el.getAttribute('json')];
+
+    if (!jsons.has(el)) {
+      const json = codie(el);
+      json.code = draft;
+      json.editable = true;
+      json.onEdit = ({ raw }) => window.$.setJson(el.getAttribute('json'), raw);
+      jsons.set(el, json);
+    }
+
+    jsons.get(el).code !== draft && (jsons.get(el).code = draft);
+  });
+
 const attach = (html) => {
   editor ??= codie('codie');
   editor.editable = true;
@@ -105,9 +125,11 @@ const attach = (html) => {
     window.$.on('afterUpdate', showUsage);
     window.$.on('afterUpdate', () => children() !== mounted && mount());
     window.$.on('afterUpdate', showMarkup);
+    window.$.on('afterUpdate', showJson);
   }
   showUsage();
   showMarkup();
+  showJson();
 };
 
 export const state = {
