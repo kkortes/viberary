@@ -249,5 +249,53 @@ export default await Promise.all(
         { name: 'artist', type: 'text', default: 'Wyndagger', description: 'Artist credit, bottom right.' },
       ],
     },
+    // The focal-point portrait crop and the round frame around it, both from
+    // battleborn-brawlers. Avatar nests Mugshot by its address on this origin.
+    {
+      file: 'Mugshot.html',
+      namespace: 'webdev',
+      notes: 'Ported to Vibe. The image is a whole URL rather than a path under the game’s own races folder.',
+      slug: 'mugshot',
+      title: 'Mugshot',
+      description: 'Crops an image to whatever point you aim it at, zoomed in, filling its parent.',
+      category: 'Game',
+      icon: 'user',
+      props: [
+        {
+          name: 'image',
+          type: 'text',
+          default: '/images/avatar/ragnar.jpg',
+          description: 'URL of the image. The default is served by viberary, so a page elsewhere passes its own.',
+        },
+        { name: 'x', type: 'number', default: 25, description: 'Horizontal point of the image, in percent of its width, that lands in the centre.' },
+        { name: 'y', type: 'number', default: 41, description: 'Vertical point of the image, in percent of its height, that lands in the centre.' },
+        { name: 'zoom', type: 'number', default: 1.6, description: 'Image width as a multiple of the frame width.' },
+        { name: 'name', type: 'text', default: 'Ragnar', description: 'Alt text of the image.' },
+        { name: 'mirror', type: 'boolean', default: false, description: 'Flips the crop horizontally.' },
+      ],
+    },
+    {
+      file: 'Avatar.html',
+      namespace: 'webdev',
+      notes: 'Ported to Vibe from the battleborn-brawlers CardDisc. It draws webdev/mugshot inside, so it renders where that address resolves.',
+      slug: 'avatar',
+      title: 'Avatar',
+      description: 'A round frame with an inset ring and drop shadow that clips a Mugshot to a circle.',
+      category: 'Game',
+      icon: 'user',
+      props: [
+        {
+          name: 'image',
+          type: 'text',
+          default: '/images/avatar/ragnar.jpg',
+          description: 'URL of the image, passed to Mugshot. The default is served by viberary, so a page elsewhere passes its own.',
+        },
+        { name: 'x', type: 'number', default: 25, description: 'Horizontal point of the image, in percent of its width, centred in the circle.' },
+        { name: 'y', type: 'number', default: 41, description: 'Vertical point of the image, in percent of its height, centred in the circle.' },
+        { name: 'zoom', type: 'number', default: 5, description: 'Image width as a multiple of the circle width. 0 falls back to 5.' },
+        { name: 'name', type: 'text', default: 'Ragnar', description: 'Alt text of the image.' },
+        { name: 'sm', type: 'boolean', default: false, description: 'Shrinks it to the 48px small size.' },
+      ],
+    },
   ].map(one),
 );

@@ -1,0 +1,31 @@
+<card-hand style="--fan: @[fan]; --overlap: @[overlap]">
+  <slot />
+</card-hand>
+
+<style>
+  card-hand {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-block: 3rem 1rem;
+
+    slot > * {
+      --offset: calc(sibling-index() - (sibling-count() + 1) / 2);
+
+      transform-origin: bottom center;
+      rotate: calc(var(--offset) * var(--fan) * 1deg);
+      translate: 0 calc(var(--offset) * var(--offset) * var(--fan) * 1.5px);
+      transition: rotate 150ms, translate 150ms;
+
+      & + * {
+        margin-inline-start: calc(var(--overlap) * -1px);
+      }
+
+      &:hover {
+        z-index: 1;
+        rotate: 0deg;
+        translate: 0 -2rem;
+      }
+    }
+  }
+</style>
