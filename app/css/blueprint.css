@@ -454,15 +454,14 @@ props > button {
 row > label {
   display: grid;
   grid-template-columns: 140px minmax(0, 1fr);
-  align-items: center;
-  justify-items: end;
+  align-items: start;
+  justify-items: start;
   gap: var(--pad);
   width: 100%;
 }
 
 row > label > * {
   grid-column: 2;
-  justify-self: start;
 }
 
 row > label::after {
