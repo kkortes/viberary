@@ -279,7 +279,6 @@ export default await Promise.all(
     // focal point.
     {
       file: 'Avatar.html',
-      namespace: 'webdev',
       notes: 'Ported to Vibe from the battleborn-brawlers CardDisc and the Mugshot crop inside it. The image is a whole URL rather than a path under the game’s own races folder.',
       slug: 'avatar',
       title: 'Avatar',
