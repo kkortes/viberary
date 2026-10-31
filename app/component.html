@@ -155,7 +155,12 @@
               <!-- /if -->
 
               <props class="sticky reverse" bg-card mt="auto" pt-4 inert="@[coding]">
-                <h6>Props</h6>
+                <crow justify-between w-full>
+                  <h6>Props</h6>
+                  <!-- if props.length -->
+                  <button tertiary sm onclick="$.reset()"><icon reset></icon>Reset</button>
+                  <!-- /if -->
+                </crow>
                 <!-- if props.length -->
                 <crow vertical left g-2 w-full>
                   <!-- if slot -->
@@ -196,8 +201,6 @@
                   </row>
                   <!-- /each -->
                 </crow>
-
-                <button tertiary w-full onclick="$.reset()"><icon reset></icon>Reset to defaults</button>
                 <!-- else -->
                 <p text-muted>This component takes no props.</p>
                 <!-- /if -->
