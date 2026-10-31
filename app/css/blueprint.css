@@ -446,6 +446,11 @@ props {
   border-top: var(--hairline) solid var(--border);
 }
 
+props > button {
+  top: 0;
+  right: 0;
+}
+
 row > label {
   display: grid;
   grid-template-columns: 140px minmax(0, 1fr);
