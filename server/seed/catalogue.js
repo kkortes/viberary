@@ -136,6 +136,28 @@ export default await Promise.all(
         },
       ],
     },
+    {
+      file: 'DataInspector.html',
+      notes: 'Ported to Vibe from the battleborn-brawlers state inspector. It inspects whatever its data prop holds rather than reading window.$, so pass it @[$] for the whole Vibe state.',
+      slug: 'data-inspector',
+      title: 'Data Inspector',
+      description: 'A collapsible tree of any object or array, a row per key with its value or size. Click a row to open it, Alt-click to open everything under it, and copy the whole thing as JSON.',
+      category: 'Interactive',
+      icon: 'search',
+      styling: 'inline',
+      props: [
+        {
+          name: 'data',
+          type: 'json',
+          default: {
+            player: { name: 'Oskar', level: 7, deck: ['fire', 'frost', 'void'] },
+            settings: { sound: true, volume: 0.8 },
+            round: 3,
+          },
+          description: 'The object or array to inspect. Bind it to @[$] to inspect the whole Vibe state. Which rows are open is kept in localStorage.',
+        },
+      ],
+    },
     // The game card from ws-card-game (src/components/Card.svelte), rewritten
     // from Tailwind into plain CSS. Its fonts load from Google Fonts and its
     // icons and paper grain are inlined; the art is the one thing it fetches by prop.
