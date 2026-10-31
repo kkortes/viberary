@@ -141,6 +141,19 @@
               <card p-4 overflow-auto><code>@[$.include()]</code></card>
               <!-- /if -->
 
+              <!-- if listeners.length -->
+              <functions inert="@[coding]">
+                <h6>Functions</h6>
+                <!-- each listeners as listener -->
+                <crow justify-between g-4 w-full>
+                  <button tertiary onclick="$.dispatch('@[listener.target]', '@[listener.event]', this.nextElementSibling.value)"><code>@[listener.event]</code></button>
+                  <input type="text" w-full placeholder="Detail, as JSON" value="@[listener.example]" />
+                  <badge bg-hollow>@[listener.target]</badge>
+                </crow>
+                <!-- /each -->
+              </functions>
+              <!-- /if -->
+
               <props class="sticky reverse" bg-card mt="auto" pt-4 inert="@[coding]">
                 <h6>Props</h6>
                 <!-- if props.length -->
@@ -187,19 +200,6 @@
                 <p text-muted>This component takes no props.</p>
                 <!-- /if -->
               </props>
-
-              <!-- if listeners.length -->
-              <functions inert="@[coding]">
-                <h6>Functions</h6>
-                <!-- each listeners as listener -->
-                <crow justify-between g-4 w-full>
-                  <button tertiary onclick="$.dispatch('@[listener.target]', '@[listener.event]', this.nextElementSibling.value)"><code>@[listener.event]</code></button>
-                  <input type="text" w-full placeholder="Detail, as JSON" value="@[listener.example]" />
-                  <badge bg-hollow>@[listener.target]</badge>
-                </crow>
-                <!-- /each -->
-              </functions>
-              <!-- /if -->
             </section>
             <section preview>
               <h6>Preview</h6>
