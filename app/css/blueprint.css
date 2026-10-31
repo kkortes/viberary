@@ -464,6 +464,12 @@ row > label > * {
   grid-column: 2;
 }
 
+row > label > name {
+  grid-column: 1;
+  top: 4px;
+  left: 0;
+}
+
 row > label::after {
   content: none;
 }
@@ -474,7 +480,7 @@ row > badge {
 }
 
 row > button {
-  top: calc(var(--unit) * 2 - 5px);
+  top: calc(var(--unit) * 2 - 6px);
   right: calc(var(--unit) * 2 - 6px);
 }
 

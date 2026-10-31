@@ -147,8 +147,8 @@
                 <crow vertical left g-2 w-full>
                   <!-- each listeners as listener -->
                   <row block position="relative" w-full>
-                    <label sm>
-                      @[listener.event]
+                    <label sm position="relative">
+                      <name position="absolute">@[listener.event]</name>
                       <input type="text" w-full placeholder="Detail, as JSON" value="@[listener.example]" />
                     </label>
                     <button secondary sm position="absolute" onclick="$.dispatch('@[listener.target]', '@[listener.event]', this.previousElementSibling.querySelector('input').value)">Invoke</button>
@@ -167,8 +167,8 @@
                 <crow vertical left g-2 w-full>
                   <!-- if slot -->
                   <row block position="relative" w-full>
-                    <label>
-                      @[slot.name]
+                    <label position="relative">
+                      <name position="absolute">@[slot.name]</name>
                       <codie markup highlight-html w-full></codie>
                     </label>
                     <badge bg-hollow text-primary w="18" position="absolute">@[slot.type]</badge>
@@ -176,8 +176,8 @@
                   <!-- /if -->
                   <!-- each attributes as prop (prop.name) -->
                   <row block position="relative" w-full>
-                    <label sm="@[!['boolean', 'json'].includes(prop.type)]">
-                      @[prop.name]
+                    <label sm="@[!['boolean', 'json'].includes(prop.type)]" position="relative">
+                      <name position="absolute">@[prop.name]</name>
                       <!-- if prop.type === 'select' -->
                       <select w-full onchange="$.values['@[prop.name]'] = this.value">
                         <!-- each prop.options as choice -->
