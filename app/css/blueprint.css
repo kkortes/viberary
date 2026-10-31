@@ -446,7 +446,7 @@ props {
   border-top: var(--hairline) solid var(--border);
 }
 
-props label[prop] {
+row > label {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: center;
@@ -455,15 +455,15 @@ props label[prop] {
   width: 100%;
 }
 
-props label[prop] > * {
+row > label > * {
   grid-column: 2;
 }
 
-props label[prop]::after {
+row > label::after {
   content: none;
 }
 
-row > badge {
+row > :is(badge, button) {
   top: calc(var(--unit) * 2 - 4px);
   right: calc(var(--unit) * 2 - 4px);
 }

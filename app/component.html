@@ -144,13 +144,17 @@
               <!-- if listeners.length -->
               <functions inert="@[coding]">
                 <h6>Functions</h6>
-                <!-- each listeners as listener -->
-                <crow justify-between g-4 w-full>
-                  <button tertiary onclick="$.dispatch('@[listener.target]', '@[listener.event]', this.nextElementSibling.value)"><code>@[listener.event]</code></button>
-                  <input type="text" w-full placeholder="Detail, as JSON" value="@[listener.example]" />
-                  <badge bg-hollow>@[listener.target]</badge>
+                <crow vertical left g-2 w-full>
+                  <!-- each listeners as listener -->
+                  <row block position="relative" w-full>
+                    <label sm>
+                      @[listener.event]
+                      <input type="text" w-full placeholder="Detail, as JSON" value="@[listener.example]" />
+                    </label>
+                    <button secondary sm position="absolute" onclick="$.dispatch('@[listener.target]', '@[listener.event]', this.previousElementSibling.querySelector('input').value)">Invoke</button>
+                  </row>
+                  <!-- /each -->
                 </crow>
-                <!-- /each -->
               </functions>
               <!-- /if -->
 
@@ -165,7 +169,7 @@
                 <crow vertical left g-2 w-full>
                   <!-- if slot -->
                   <row block position="relative" w-full>
-                    <label prop>
+                    <label>
                       @[slot.name]
                       <codie markup highlight-html w-full></codie>
                     </label>
@@ -174,7 +178,7 @@
                   <!-- /if -->
                   <!-- each attributes as prop (prop.name) -->
                   <row block position="relative" w-full>
-                    <label prop sm="@[!['boolean', 'json'].includes(prop.type)]">
+                    <label sm="@[!['boolean', 'json'].includes(prop.type)]">
                       @[prop.name]
                       <!-- if prop.type === 'select' -->
                       <select w-full onchange="$.values['@[prop.name]'] = this.value">
