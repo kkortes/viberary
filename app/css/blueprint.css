@@ -464,9 +464,8 @@ props label[prop]::after {
 }
 
 row > badge {
-  top: 50%;
+  top: calc(var(--unit) * 2 - 4px);
   right: calc(var(--unit) * 2 - 4px);
-  translate: 0 -50%;
 }
 
 box[main] + divider,
