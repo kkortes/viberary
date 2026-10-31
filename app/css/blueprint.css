@@ -465,7 +465,7 @@ props label[prop]::after {
 
 row > badge {
   top: 50%;
-  right: calc(var(--unit) * 2);
+  right: calc(var(--unit) * 2 - 4px);
   translate: 0 -50%;
 }
 

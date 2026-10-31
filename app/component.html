@@ -168,7 +168,7 @@
                 <!-- /if -->
                 <!-- each attributes as prop (prop.name) -->
                 <row block position="relative" w-full>
-                  <label prop sm="@[!['select', 'boolean', 'json'].includes(prop.type)]">
+                  <label prop sm="@[!['boolean', 'json'].includes(prop.type)]">
                     @[prop.name]
                     <!-- if prop.type === 'select' -->
                     <select w-full onchange="$.values['@[prop.name]'] = this.value">
