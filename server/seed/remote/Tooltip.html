@@ -1,0 +1,256 @@
+<script type="module">
+  import component from '@ape-egg/vibe/component';
+
+  const OFFSET = 8;
+  const instance = Math.random().toString(36).slice(2);
+  const id = component({ instance, tooltip: null });
+
+  const root = () => document.querySelector(`tooltip-root[data-instance="${instance}"]`);
+  const clamp = (value, low, high) => Math.min(Math.max(value, low), high);
+
+  let anchored = null;
+  let leave = null;
+
+  const detach = () => {
+    anchored?.removeEventListener('mouseleave', leave);
+    anchored = null;
+  };
+
+  const anchorPoint = (anchor, direction) => {
+    if (anchor instanceof Element) {
+      const r = anchor.getBoundingClientRect();
+      const points = {
+        down: { x: r.left + r.width / 2, y: r.bottom },
+        left: { x: r.left, y: r.top + r.height / 2 },
+        right: { x: r.right, y: r.top + r.height / 2 },
+        up: { x: r.left + r.width / 2, y: r.top },
+      };
+      return points[direction] ?? { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    }
+    return anchor ? { x: anchor.x ?? anchor.clientX, y: anchor.y ?? anchor.clientY } : { x: 0, y: 0 };
+  };
+
+  const isOptions = (value) => value && !(value instanceof Element) && !('x' in value) && !('clientX' in value);
+
+  window.showTooltip = (props, second, third) => {
+    detach();
+    const [options = {}, given] = isOptions(second) ? [second, third] : [third, second];
+    const anchor = given ?? window.event?.currentTarget;
+    const { direction = 'none', lock, persist } = options;
+    const target = anchorPoint(anchor, direction);
+    const follow = !lock && anchor?.clientX !== undefined;
+
+    $[id].tooltip = {
+      x: follow ? anchor.clientX : target.x,
+      y: follow ? anchor.clientY : target.y,
+      props: props ?? {},
+      direction,
+      lock: !!lock,
+    };
+
+    if (anchor instanceof Element && !persist) {
+      anchored = anchor;
+      leave = window.hideTooltip;
+      anchor.addEventListener('mouseleave', leave);
+    }
+  };
+
+  window.hideTooltip = () => {
+    detach();
+    $[id].tooltip = null;
+  };
+
+  let bodyLeft = 0;
+  let bodyTop = 0;
+
+  const body = () => root()?.querySelector('tooltip-body');
+
+  const cut = (x, y) => {
+    const cramped = root().querySelector('tooltip-body[cramped]');
+    cramped?.style.setProperty('--cut-x', `${x - bodyLeft}px`);
+    cramped?.style.setProperty('--cut-y', `${y - bodyTop}px`);
+  };
+
+  const move = ({ clientX, clientY }) => {
+    const { tooltip } = $[id];
+    if (!tooltip) return;
+    if (!tooltip.lock) Object.assign(tooltip, { x: clientX, y: clientY });
+    cut(clientX, clientY);
+  };
+
+  const position = () => {
+    const el = body();
+    if (!el) return;
+
+    const { width, height, left, top } = el.getBoundingClientRect();
+    if (!width || !height) return;
+
+    const main = el.querySelector('tooltip-main').getBoundingClientRect();
+    const offX = main.left - left;
+    const offY = main.top - top;
+    const { x, y, direction } = $[id].tooltip;
+
+    const mains = {
+      up: [x - main.width / 2, y - main.height - OFFSET],
+      down: [x - main.width / 2, y + OFFSET],
+      left: [x - main.width - OFFSET, y - main.height / 2],
+      right: [x + OFFSET, y - main.height / 2],
+      none: [x - main.width / 2, y - main.height / 2],
+    };
+    const [mainLeft, mainTop] = mains[direction];
+    const idealLeft = mainLeft - offX;
+    const idealTop = mainTop - offY;
+    const fitLeft = clamp(idealLeft, 0, Math.max(0, innerWidth - width));
+    const fitTop = clamp(idealTop, 0, Math.max(0, innerHeight - height));
+
+    const sideways = ['left', 'right'].includes(direction);
+    const cramped = sideways ? fitLeft !== idealLeft : fitTop !== idealTop;
+    const wasCramped = el.hasAttribute('cramped');
+    el.toggleAttribute('cramped', cramped);
+
+    bodyLeft = fitLeft;
+    bodyTop = fitTop;
+    if (cramped && !wasCramped) cut(x, y);
+
+    el.style.left = `${fitLeft - x}px`;
+    el.style.top = `${fitTop - y}px`;
+
+    const pointer = el.querySelector('tooltip-pointer');
+    const inset = pointer.offsetWidth || 12;
+    pointer.style.left = sideways ? '' : `${clamp(x - fitLeft, offX + inset, Math.max(offX + inset, offX + main.width - inset))}px`;
+    pointer.style.top = sideways ? `${clamp(y - fitTop, offY + inset, Math.max(offY + inset, offY + main.height - inset))}px` : '';
+
+    el.setAttribute('positioned', '');
+  };
+
+  const resize = new ResizeObserver(position);
+  let observed = null;
+
+  // A removed element never fires mouseleave, so an anchor that leaves the DOM
+  // would orphan its tooltip. Every removal in Vibe happens through a flush, so
+  // the anchor is checked right after each one.
+  const update = () => {
+    if (anchored && !anchored.isConnected) window.hideTooltip();
+    if (body() !== observed) {
+      resize.disconnect();
+      observed = body();
+      observed && resize.observe(observed);
+    }
+    position();
+  };
+
+  addEventListener('mousemove', move);
+  $.on('afterUpdate', update);
+
+  $.on('unmount', () => {
+    removeEventListener('mousemove', move);
+    resize.disconnect();
+    detach();
+    delete window.showTooltip;
+    delete window.hideTooltip;
+  });
+</script>
+
+<tooltip-root data-instance="@[this.instance]">
+  <slot></slot>
+  <!-- if this.tooltip -->
+  <tooltip-layer style="left: @[this.tooltip.x]px; top: @[this.tooltip.y]px">
+    <tooltip-body @[this.tooltip.direction]>
+      <tooltip-main>
+        <card text-sm tooltip-card>
+          <!-- if this.tooltip.props.name -->
+          <strong>@[this.tooltip.props.name]</strong>
+          <!-- /if -->
+          <!-- if this.tooltip.props.description -->
+          <p m-0 text-muted>@[$.unsafe(this.tooltip.props.description)]</p>
+          <!-- /if -->
+        </card>
+      </tooltip-main>
+      <tooltip-pointer></tooltip-pointer>
+    </tooltip-body>
+  </tooltip-layer>
+  <!-- /if -->
+</tooltip-root>
+
+<style>
+  tooltip-layer {
+    position: fixed;
+    z-index: var(--z-tooltip, 100);
+    pointer-events: none;
+  }
+
+  tooltip-body {
+    position: absolute;
+    display: block;
+    width: max-content;
+    opacity: 0;
+    filter: drop-shadow(0 calc(var(--unit) * 0.5) var(--unit) rgb(0 0 0 / 0.2));
+    transition: opacity 180ms ease-out, transform 180ms ease-out;
+  }
+
+  tooltip-body[up] { transform: translateY(calc(var(--unit) * -4)); }
+  tooltip-body[down] { transform: translateY(calc(var(--unit) * 4)); }
+  tooltip-body[left] { transform: translateX(calc(var(--unit) * -4)); }
+  tooltip-body[right] { transform: translateX(calc(var(--unit) * 4)); }
+
+  tooltip-body[positioned] {
+    opacity: 1;
+    transform: none;
+  }
+
+  [tooltip-card] {
+    display: block;
+    max-width: calc(var(--unit) * 76);
+    padding: calc(var(--unit) * 3);
+    background: var(--tooltip-surface, var(--card));
+  }
+
+  [tooltip-card] p {
+    margin-top: calc(var(--unit) * 2);
+    text-wrap: pretty;
+  }
+
+  tooltip-pointer {
+    position: absolute;
+    width: calc(var(--unit) * 3);
+    height: calc(var(--unit) * 3);
+    background: var(--tooltip-surface, var(--card));
+    border: 1px solid var(--border);
+  }
+
+  tooltip-body[up] tooltip-pointer {
+    bottom: 1px;
+    transform: translate(-50%, 50%) rotate(45deg);
+    clip-path: polygon(0% 100%, 100% 100%, 100% 0%);
+  }
+
+  tooltip-body[down] tooltip-pointer {
+    top: 1px;
+    transform: translate(-50%, -50%) rotate(45deg);
+    clip-path: polygon(0% 0%, 0% 100%, 100% 0%);
+  }
+
+  tooltip-body[left] tooltip-pointer {
+    right: 1px;
+    transform: translate(50%, -50%) rotate(45deg);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
+  }
+
+  tooltip-body[right] tooltip-pointer {
+    left: 1px;
+    transform: translate(-50%, -50%) rotate(45deg);
+    clip-path: polygon(0% 0%, 0% 100%, 100% 100%);
+  }
+
+  tooltip-body:is([none], [cramped]) tooltip-pointer {
+    display: none;
+  }
+
+  tooltip-body[cramped] [tooltip-card] {
+    mask: radial-gradient(
+      circle calc(var(--unit) * 10) at var(--cut-x, 50%) var(--cut-y, 50%),
+      rgb(0 0 0 / 0.65) 55%,
+      #000 100%
+    );
+  }
+</style>

@@ -23,6 +23,32 @@ export default await Promise.all(
       styling: 'stylecheat',
     },
     {
+      file: 'Tooltip.html',
+      notes: 'Ported from the battleborn-brawlers global tooltip. Its content is the plain text piece, a name over a description; the game\'s ability, equipment, countdown and compare pieces stay with the game.',
+      slug: 'tooltip',
+      title: 'Tooltip',
+      description: 'One tooltip for the whole page, mounted once and shown from anywhere with showTooltip. It follows the cursor or locks to its anchor, points at it from any side, keeps inside the viewport and hides when the anchor is left or removed. Needs Stylecheat.',
+      category: 'Feedback',
+      icon: 'pin',
+      styling: 'stylecheat',
+      props: [
+        {
+          name: 'html',
+          type: 'html',
+          default: [
+            '<crow g-2>',
+            `  <button onmouseenter="showTooltip({ name: 'Above', description: 'Locked to the button, <b>trusted HTML</b> allowed.' }, event.currentTarget, { direction: 'up', lock: true })">Up</button>`,
+            `  <button onmouseenter="showTooltip({ name: 'Below' }, event.currentTarget, { direction: 'down', lock: true })">Down</button>`,
+            `  <button onmouseenter="showTooltip({ name: 'Left' }, event.currentTarget, { direction: 'left', lock: true })">Left</button>`,
+            `  <button onmouseenter="showTooltip({ name: 'Right' }, event.currentTarget, { direction: 'right', lock: true })">Right</button>`,
+            `  <button onmouseenter="showTooltip({ name: 'Follows', description: 'Tracks the cursor until it leaves the button.' }, event.currentTarget, { direction: 'up' })">Follow</button>`,
+            '</crow>',
+          ].join('\n'),
+          description: 'The markup between the tags, rendered in place. Mounted once in a layout it stays empty; here it holds buttons that show the tooltip. Call showTooltip({ name, description }, anchor, { direction, lock, persist }) from anywhere: anchor is an element, a mouse event or { x, y }, direction is up, down, left, right or none, lock pins it to the anchor instead of the cursor, persist keeps it past mouseleave until hideTooltip() runs. The description is trusted HTML.',
+        },
+      ],
+    },
+    {
       file: 'Overlay.html',
       notes: 'Ported to Vibe. What it shows is whatever sits between the component tags, any HTML or another <component src>.',
       slug: 'overlay',
