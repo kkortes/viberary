@@ -275,15 +275,15 @@ export default await Promise.all(
         { name: 'artist', type: 'text', default: 'Wyndagger', description: 'Artist credit, bottom right.' },
       ],
     },
-    // The focal-point portrait crop and the round frame around it, both from
-    // battleborn-brawlers. Avatar nests Mugshot by its address on this origin.
+    // The round portrait frame from battleborn-brawlers, cropping its image to a
+    // focal point.
     {
-      file: 'Mugshot.html',
+      file: 'Avatar.html',
       namespace: 'webdev',
-      notes: 'Ported to Vibe. The image is a whole URL rather than a path under the game’s own races folder.',
-      slug: 'mugshot',
-      title: 'Mugshot',
-      description: 'Crops an image to whatever point you aim it at, zoomed in, filling its parent.',
+      notes: 'Ported to Vibe from the battleborn-brawlers CardDisc and the Mugshot crop inside it. The image is a whole URL rather than a path under the game’s own races folder.',
+      slug: 'avatar',
+      title: 'Avatar',
+      description: 'A round frame with an inset ring and drop shadow that crops an image to whatever point you aim it at, zoomed in.',
       category: 'Game',
       icon: 'user',
       props: [
@@ -292,29 +292,6 @@ export default await Promise.all(
           type: 'text',
           default: '/images/card/oskar.jpg',
           description: 'URL of the image. The default is served by viberary, so a page elsewhere passes its own.',
-        },
-        { name: 'x', type: 'number', default: 46, description: 'Horizontal point of the image, in percent of its width, that lands in the centre.' },
-        { name: 'y', type: 'number', default: 21, description: 'Vertical point of the image, in percent of its height, that lands in the centre.' },
-        { name: 'zoom', type: 'number', default: 1.6, description: 'Image width as a multiple of the frame width.' },
-        { name: 'name', type: 'text', default: 'Oskar', description: 'Alt text of the image.' },
-        { name: 'mirror', type: 'boolean', default: false, description: 'Flips the crop horizontally.' },
-      ],
-    },
-    {
-      file: 'Avatar.html',
-      namespace: 'webdev',
-      notes: 'Ported to Vibe from the battleborn-brawlers CardDisc. It draws webdev/mugshot inside, so it renders where that address resolves.',
-      slug: 'avatar',
-      title: 'Avatar',
-      description: 'A round frame with an inset ring and drop shadow that clips a Mugshot to a circle.',
-      category: 'Game',
-      icon: 'user',
-      props: [
-        {
-          name: 'image',
-          type: 'text',
-          default: '/images/card/oskar.jpg',
-          description: 'URL of the image, passed to Mugshot. The default is served by viberary, so a page elsewhere passes its own.',
         },
         { name: 'x', type: 'number', default: 46, description: 'Horizontal point of the image, in percent of its width, centred in the circle.' },
         { name: 'y', type: 'number', default: 21, description: 'Vertical point of the image, in percent of its height, centred in the circle.' },

@@ -1,17 +1,10 @@
-<avatar-disc sm="@[sm]">
-  <component
-    src="/webdev/mugshot.html"
-    image="@[image]"
-    x="@[x]"
-    y="@[y]"
-    zoom="@[zoom || 5]"
-    name="@[name]"
-  >
-  </component>
+<avatar-disc sm="@[sm]" style="--x: @[x]; --y: @[y]; --zoom: @[zoom || 5]">
+  <img src="@[image]" alt="@[name || '']" />
 </avatar-disc>
 
 <style>
   avatar-disc {
+    position: relative;
     display: block;
     width: calc(var(--unit) * 32);
     aspect-ratio: 1;
@@ -28,6 +21,15 @@
       box-shadow 160ms ease,
       filter 250ms ease,
       opacity 250ms ease;
+  }
+
+  avatar-disc img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: calc(100% * var(--zoom));
+    transform: translate(calc(var(--x, 50) * -1%), calc(var(--y, 15) * -1%));
+    pointer-events: none;
   }
 
   avatar-disc[sm] {
