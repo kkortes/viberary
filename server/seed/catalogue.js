@@ -196,7 +196,7 @@ export default await Promise.all(
       description: 'A collapsible tree of any object or array, a row per key with its value or size. Click a row to open it, Alt-click to open everything under it, and copy the whole thing as JSON.',
       category: 'Interactive',
       icon: 'search',
-      styling: 'inline',
+      styling: 'stylecheat',
       props: [
         {
           name: 'data',

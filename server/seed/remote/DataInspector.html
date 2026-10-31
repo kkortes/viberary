@@ -106,132 +106,24 @@
   });
 </script>
 
-<data-inspector>
-  <data-inspector-header>
-    <data-inspector-title>
+<data-inspector sm vertical left f-1 w-full overflow-hidden bg="#1e1e1e" text="#d4d4d4">
+  <crow justify-between w-full g="6" py="3.75" px="4.5" bg="#252526">
+    <h6 sm text="#969696">
       Data (@[this.view(data, this.openPaths).shallow] | @[this.view(data, this.openPaths).total])
-    </data-inspector-title>
-    <data-inspector-actions>
-      <button onclick="this.toggleAll()">@[this.view(data, this.openPaths).label]</button>
-      <button onclick="this.copy()">Copy JSON</button>
-    </data-inspector-actions>
-  </data-inspector-header>
-  <data-inspector-lines>
+    </h6>
+    <crow g="1.5">
+      <button secondary sm radius="4px" bg="transparent" text="#969696" hover="#2a2d2e" onclick="this.toggleAll()">
+        @[this.view(data, this.openPaths).label]
+      </button>
+      <button secondary sm radius="4px" bg="transparent" text="#969696" hover="#2a2d2e" onclick="this.copy()">Copy JSON</button>
+    </crow>
+  </crow>
+  <data-inspector-lines vertical left up f-1 w-full overflow-auto>
     <!-- each this.view(data, this.openPaths).rows as row (row.path) -->
-    <data-inspector-row expandable="@[row.expandable]" onclick="this.toggle(event, row)">
-      <data-inspector-key style="padding-left: calc(@[row.depth] * 1ch)">@[row.key]</data-inspector-key>
-      <data-inspector-value bracket="@[row.expandable]">@[row.summary]</data-inspector-value>
-    </data-inspector-row>
+    <crow left w-full g="3" py="0.75" px="4.5" hover="#2a2d2e" onclick="this.toggle(event, row)">
+      <span f-0 pl="@[row.depth]ch" text="#9cdcfe">@[row.key]</span>
+      <crow right f-1 overflow-hidden text="@[row.expandable ? '#569cd6' : '#ce9178']">@[row.summary]</crow>
+    </crow>
     <!-- /each -->
   </data-inspector-lines>
 </data-inspector>
-
-<style>
-  data-inspector {
-    --inspector-bg: #1e1e1e;
-    --inspector-header-bg: #252526;
-    --inspector-border: #3c3c3c;
-    --inspector-divider: #424242;
-    --inspector-divider-strong: #505050;
-    --inspector-text: #d4d4d4;
-    --inspector-text-muted: #969696;
-    --inspector-row-hover: #2a2d2e;
-    --inspector-key: #9cdcfe;
-    --inspector-bracket: #569cd6;
-    --inspector-string: #ce9178;
-
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-    font-size: calc(var(--unit, 4px) * 3);
-    background: var(--inspector-bg);
-    color: var(--inspector-text);
-    font-family: 'Geist Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
-  }
-
-  data-inspector-header {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: calc(var(--unit, 4px) * 4);
-    padding: calc(var(--unit, 4px) * 2.5) calc(var(--unit, 4px) * 3);
-    background: var(--inspector-header-bg);
-    border-bottom: 1px solid var(--inspector-border);
-  }
-
-  data-inspector-title {
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--inspector-text-muted);
-  }
-
-  data-inspector-actions {
-    display: flex;
-    gap: calc(var(--unit, 4px) * 1);
-  }
-
-  data-inspector-actions button {
-    height: calc(var(--unit, 4px) * 6);
-    padding: 0 calc(var(--unit, 4px) * 2);
-    font: inherit;
-    color: var(--inspector-text-muted);
-    background: transparent;
-    border: 1px solid var(--inspector-border);
-    border-radius: calc(var(--unit, 4px) * 1);
-    white-space: nowrap;
-    cursor: pointer;
-  }
-
-  data-inspector-actions button:hover {
-    color: var(--inspector-text);
-    background: var(--inspector-row-hover);
-    border-color: var(--inspector-divider-strong);
-  }
-
-  data-inspector-lines {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    overflow: hidden auto;
-    line-height: 1.5;
-    scrollbar-color: var(--inspector-divider) transparent;
-  }
-
-  data-inspector-row {
-    display: flex;
-    align-items: center;
-    gap: calc(var(--unit, 4px) * 2);
-    padding: calc(var(--unit, 4px) * 0.5) calc(var(--unit, 4px) * 3);
-  }
-
-  data-inspector-row:hover {
-    background: var(--inspector-row-hover);
-  }
-
-  data-inspector-row[expandable] {
-    cursor: pointer;
-  }
-
-  data-inspector-key {
-    flex-shrink: 0;
-    color: var(--inspector-key);
-  }
-
-  data-inspector-value {
-    flex: 1;
-    min-width: 0;
-    text-align: right;
-    word-break: break-word;
-    color: var(--inspector-string);
-  }
-
-  data-inspector-value[bracket] {
-    color: var(--inspector-bracket);
-  }
-</style>
