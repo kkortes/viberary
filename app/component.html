@@ -146,7 +146,7 @@
                 <h6>Functions</h6>
                 <crow vertical left my="-1" w-full>
                   <!-- each listeners as listener -->
-                  <row block position="relative" w-full py-1 hover>
+                  <row block position="relative" py-1 hover>
                     <label sm position="relative">
                       <name position="absolute">@[listener.event]</name>
                       <input type="text" w-full placeholder="Detail, as JSON" value="@[listener.example]" />
@@ -166,7 +166,7 @@
                 <!-- if props.length -->
                 <crow vertical left my="-1" w-full>
                   <!-- if slot -->
-                  <row block position="relative" w-full py-1 hover>
+                  <row block position="relative" py-1 hover>
                     <label position="relative">
                       <name position="absolute">@[slot.name]</name>
                       <codie markup highlight-html w-full></codie>
@@ -175,7 +175,7 @@
                   </row>
                   <!-- /if -->
                   <!-- each attributes as prop (prop.name) -->
-                  <row block position="relative" w-full py-1 hover>
+                  <row block position="relative" py-1 hover>
                     <label sm="@[!['boolean', 'json'].includes(prop.type)]" position="relative">
                       <name position="absolute">@[prop.name]</name>
                       <!-- if prop.type === 'select' -->
