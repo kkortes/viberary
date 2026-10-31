@@ -433,10 +433,16 @@ functions {
   flex-direction: column;
   align-items: flex-start;
   gap: inherit;
+}
+
+functions {
   width: 100%;
 }
 
 props {
+  align-self: stretch;
+  margin-inline: calc(var(--pad) * -1);
+  padding-inline: var(--pad);
   border-top: var(--hairline) solid var(--border);
 }
 
